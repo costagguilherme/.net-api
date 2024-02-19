@@ -17,7 +17,7 @@ namespace SmartSchool.WebAPI.Data
             
         }
         protected override void OnModelCreating(ModelBuilder builder)
-        {
+        {            
             builder.Entity<AlunoDisciplina>()
                 .HasKey(alunoDisc => new {alunoDisc.AlunoId, alunoDisc.DisciplinaId});
 
