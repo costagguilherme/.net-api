@@ -1,6 +1,6 @@
 using SmartSchool.WebAPI.Models;
 
-namespace SmartSchool.WebAPI.Data
+namespace SmartSchool.WebAPI.Interfaces
 {
     public interface IAlunoRepository : IRepository
     {

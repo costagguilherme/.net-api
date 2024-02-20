@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using SmartSchool.WebAPI.Interfaces;
 using SmartSchool.WebAPI.Models;
 
-namespace SmartSchool.WebAPI.Data
+namespace SmartSchool.WebAPI.Repositories
 {
     public class AlunoRepository : Repository, IAlunoRepository
     {
