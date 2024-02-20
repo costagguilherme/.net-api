@@ -27,7 +27,7 @@ namespace SmartSchool.WebAPI.Controllers
         public IActionResult GetById(int id)
         {
             var professor = _professorRepository.GetById(id, true);
-            if (professor == null) return BadRequest();
+            if (professor == null) return BadRequest("Professor não existe");
             return Ok(professor);
         }
 
