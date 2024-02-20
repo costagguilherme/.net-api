@@ -37,6 +37,9 @@ namespace SmartSchool.WebAPI
 
             // dependency inversion
             services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IProfessorRepository, ProfessorRepository>();
+            services.AddScoped<IAlunoRepository, AlunoRepository>();
+            
 
             services.AddControllers()
                 .AddNewtonsoftJson(option // prevent loops

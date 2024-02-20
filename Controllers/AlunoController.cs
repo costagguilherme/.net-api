@@ -9,22 +9,22 @@ namespace SmartSchool.WebAPI.Controllers
     [Route("api/[controller]")]
     public class AlunoController : ControllerBase
     {
-        private IRepository _repo;
-        public AlunoController(IRepository repo)
+        private IAlunoRepository _alunoRepository;
+        public AlunoController(IAlunoRepository repository)
         {
-            this._repo = repo;
+            _alunoRepository = repository;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_repo.GetAllAlunos(true));
+            return Ok(_alunoRepository.GetAll(true));
         }
 
         [HttpGet("{id:int}")]
         public IActionResult GetById(int id)
         {
-            var aluno = _repo.GetAlunoById(id, true);
+            var aluno = _alunoRepository.GetById(id, true);
             if (aluno == null) return BadRequest("Aluno não encontrado");
             return Ok(aluno);
         }
@@ -32,8 +32,8 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post(Aluno aluno)
         {
-            _repo.Add(aluno);
-            if (_repo.SaveChanges())
+            _alunoRepository.Add(aluno);
+            if (_alunoRepository.SaveChanges())
             {
                 return Ok(aluno);
             }
@@ -43,11 +43,11 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, Aluno aluno)
         {
-            var a = _repo.GetAlunoById(id);
+            var a = _alunoRepository.GetById(id);
             if (a == null) return BadRequest("Aluno não existe");
 
-            _repo.Update(aluno);
-            if (_repo.SaveChanges())
+            _alunoRepository.Update(aluno);
+            if (_alunoRepository.SaveChanges())
             {
                 return Ok(aluno);
             }
@@ -57,11 +57,11 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var aluno = _repo.GetAlunoById(id);
+            var aluno = _alunoRepository.GetById(id);
             if (aluno == null) return BadRequest("Aluno não existe");
 
-            _repo.Delete(aluno);
-            if (_repo.SaveChanges())
+            _alunoRepository.Delete(aluno);
+            if (_alunoRepository.SaveChanges())
             {
                 return Ok("Aluno deletado");
             }
