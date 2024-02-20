@@ -10,23 +10,23 @@ namespace SmartSchool.WebAPI.Controllers
     public class ProfessorController : ControllerBase
     {
 
-        private IProfessorRepository professorRepository;
+        private IProfessorRepository _professorRepository;
 
         public ProfessorController(IProfessorRepository repository)
         {
-            this.professorRepository = repository;
+            _professorRepository = repository;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(professorRepository.GetAll(true));
+            return Ok(_professorRepository.GetAll(true));
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var professor = professorRepository.GetById(id, true);
+            var professor = _professorRepository.GetById(id, true);
             if (professor == null) return BadRequest();
             return Ok(professor);
         }
@@ -34,8 +34,8 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post(int id, Professor professor)
         {
-            professorRepository.Add(professor);
-            if (professorRepository.SaveChanges())
+            _professorRepository.Add(professor);
+            if (_professorRepository.SaveChanges())
             {
                 return Ok(professor);
             }
@@ -45,10 +45,10 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, Professor professor)
         {
-            var prof = professorRepository.GetById(id);
+            var prof = _professorRepository.GetById(id);
             if (prof == null) return BadRequest("Professor não existe");
-            professorRepository.Update(professor);
-            if (professorRepository.SaveChanges())
+            _professorRepository.Update(professor);
+            if (_professorRepository.SaveChanges())
             {
                 return Ok(professor);
             }
@@ -58,10 +58,10 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var professor = professorRepository.GetById(id);
+            var professor = _professorRepository.GetById(id);
             if (professor == null) return BadRequest("Professor não existe");
-            professorRepository.Delete(professor);
-            if (professorRepository.SaveChanges())
+            _professorRepository.Delete(professor);
+            if (_professorRepository.SaveChanges())
             {
                 return Ok(professor);
             }
