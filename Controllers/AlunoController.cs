@@ -9,12 +9,10 @@ namespace SmartSchool.WebAPI.Controllers
     [Route("api/[controller]")]
     public class AlunoController : ControllerBase
     {
-        private SmartContext context;
         private IRepository _repo;
-        public AlunoController(SmartContext context, IRepository repo)
+        public AlunoController(IRepository repo)
         {
             this._repo = repo;
-            this.context = context;
         }
 
         [HttpGet]
@@ -26,7 +24,7 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpGet("{id:int}")]
         public IActionResult GetById(int id)
         {
-            var aluno  = _repo.GetAlunoById(id, true);
+            var aluno = _repo.GetAlunoById(id, true);
             if (aluno == null) return BadRequest("Aluno não encontrado");
             return Ok(aluno);
         }

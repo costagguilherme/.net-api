@@ -10,12 +10,10 @@ namespace SmartSchool.WebAPI.Controllers
     public class ProfessorController : ControllerBase
     {
 
-        private SmartContext context;
         private IRepository _repo;
 
-        public ProfessorController(SmartContext context, IRepository repository)
+        public ProfessorController(IRepository repository)
         {
-            this.context = context;
             this._repo = repository;
         }
 
