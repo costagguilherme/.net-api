@@ -22,13 +22,13 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(this.context.Professores);
+            return Ok(_repo.GetAllProfessores(true));
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var professor = this.context.Professores.FirstOrDefault(p => p.id == id);
+            var professor = _repo.GetProfessorById(id, true);
             if (professor == null) return BadRequest();
             return Ok(professor);
         }
@@ -47,21 +47,27 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, Professor professor)
         {
-            var prof = this.context.Professores.AsNoTracking().FirstOrDefault(p => p.id == id);
+            var prof = _repo.GetProfessorById(id);
             if (prof == null) return BadRequest("Professor não existe");
-            this.context.Update(professor);
-            this.context.SaveChanges();
-            return Ok(professor);
+            _repo.Update(professor);
+            if (_repo.SaveChanges())
+            {
+                return Ok(professor);
+            }
+            return BadRequest("Professor não cadastrado");
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var professor = this.context.Professores.AsNoTracking().FirstOrDefault(p => p.id == id);
+            var professor = _repo.GetProfessorById(id);
             if (professor == null) return BadRequest("Professor não existe");
-            this.context.Remove(professor);
-            this.context.SaveChanges();
-            return Ok(professor);
+            _repo.Delete(professor);
+            if (_repo.SaveChanges())
+            {
+                return Ok(professor);
+            }
+            return BadRequest("Professor não deletado");
         }
     }
 }
